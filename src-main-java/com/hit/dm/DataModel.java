@@ -7,17 +7,17 @@ public class DataModel<T> implements Serializable{
 	/**
 	 * 
 	 */
-	private java.lang.Long id;
+	private java.lang.Long dataModelId;
 	private T content;
 
 	public DataModel(java.lang.Long id, T content) {
-		this.id = id;
+		this.dataModelId = id;
 		this.content = content;
 	}
 
 	public boolean equals(java.lang.Object obj) {
 		boolean isEqual = false;
-		if (this.id == ((DataModel<T>)obj).id && this.content == ((DataModel<T>)obj).content) {
+		if (this.dataModelId == ((DataModel<T>)obj).dataModelId && this.content == ((DataModel<T>)obj).content) {
 			isEqual = true;
 		}
 		return isEqual;
@@ -36,11 +36,11 @@ public class DataModel<T> implements Serializable{
 	}
 
 	public java.lang.Long getDataModelId() {
-		return this.id;
+		return this.dataModelId;
 	}
 
 	public void setDataModelId(java.lang.Long id) {
-		this.id = id;
+		this.dataModelId = id;
 	}
 
 	public java.lang.String toString() {
