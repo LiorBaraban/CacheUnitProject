@@ -21,7 +21,7 @@ public class CacheUnit<T> {
 	
 	@SuppressWarnings("unchecked")
 	//throws classnotfoundexception, ioexceptions
-	DataModel<T>[] getDataModels(java.lang.Long[] ids) throws IllegalArgumentException, IOException{
+	public DataModel<T>[] getDataModels(java.lang.Long[] ids) throws IllegalArgumentException, IOException{
 		//DataModel<T>[] dataModels = (DataModel<T>[]) new Object[ids.length];
 		//DataModel<T>[] dataModels = new Datamodel<T>[ids.length];
 		DataModel<T> modelPrototype = new DataModel<T>(0L,null);

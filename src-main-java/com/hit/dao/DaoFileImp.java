@@ -35,11 +35,11 @@ public class DaoFileImp<T> implements IDao<Serializable, DataModel<T>> {
 		// this.fis = new FileInputStream(this.filePath);
 		// this.ois = new ObjectInputStream(this.fis);
 
-		FileOutputStream fos = new FileOutputStream(this.filePath);
-		ObjectOutputStream os = new ObjectOutputStream(fos);
-		os.writeObject(new HashMap<Long, DataModel<T>>());
-		os.close();
-		fos.close();
+//		FileOutputStream fos = new FileOutputStream(this.filePath);
+//		ObjectOutputStream os = new ObjectOutputStream(fos);
+//		os.writeObject(new HashMap<Long, DataModel<T>>());
+//		os.close();
+//		fos.close();
 	}
 
 	@SuppressWarnings("unchecked")

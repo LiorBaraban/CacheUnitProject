@@ -47,12 +47,12 @@ public class HandleRequest<T> implements Runnable {
 			PrintWriter writer = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream()));
 			System.out.println("In handle request thread run");
 			String requestJson = this.parseRequestToJson(bufReader, writer);
-			// System.out.println(req); 
+			System.out.println(requestJson); 
 
 			Type ref = new TypeToken<Request<DataModel<T>[]>>() {}.getType();
 			Request<DataModel<T>[]> parsedRequest = new Gson().fromJson(requestJson, ref);
 
-//			System.out.println(parsedRequest);
+			System.out.println(parsedRequest);
 
 			// parsedRequest.getBody() == datamodel[] => dm[0].getDataModelId() == 1,
 			// dm[0].getContent()= "lior";
@@ -67,15 +67,20 @@ public class HandleRequest<T> implements Runnable {
 			//TODO - refactor the methods below need to return a value that Writer will write back to the clients
 			switch (action) {
 			case "UPDATE":
-				this.controller.update(parsedRequest.getBody());
+				boolean updateResult = this.controller.update(parsedRequest.getBody());
+				writer.write("update result = " + updateResult);
 				break;
 			case "DELETE":
-				this.controller.delete(parsedRequest.getBody());
+				boolean deleteResult = this.controller.delete(parsedRequest.getBody());
+				writer.write("delete result = " + deleteResult);
 				break;
 			case "GET":
-				this.controller.get(parsedRequest.getBody());
+				DataModel<T>[] dataModelsArray = this.controller.get(parsedRequest.getBody());
+				writer.write("get result =" + dataModelsArray );
 				break;
 			}
+			
+			writer.flush();
 			
 			// extract the socket input / output streams
 			// read json + header
@@ -113,7 +118,7 @@ public class HandleRequest<T> implements Runnable {
 						// reading the last } :
 						if (jsonCurlyBraceCounter == 0) {
 							sb.append(s);
-//							System.out.println(sb);
+							System.out.println(sb);
 							isFinished = true;
 						}
 						if (isFinished) {
@@ -124,7 +129,7 @@ public class HandleRequest<T> implements Runnable {
 
 				if (jsonCurlyBraceCounter > 0) {
 					sb.append(s);
-//					System.out.println(sb);
+					System.out.println(sb);
 				}
 			}
 			System.out.println("finished reading json");

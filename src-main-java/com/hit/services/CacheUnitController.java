@@ -11,28 +11,31 @@
  * */
 package com.hit.services;
 
+import java.io.IOException;
+
 import com.hit.dm.DataModel;
 
-public class CacheUnitController<T>{
+public class CacheUnitController<T> {
 
-	public CacheUnitController() {
+	private CacheUnitService<T> cacheUnitService;
+
+	public CacheUnitController() throws IOException {
 		// TODO Auto-generated constructor stub
+		this.cacheUnitService = new CacheUnitService<T>();
 	}
-	
-	public boolean delete(DataModel<T>[] dataModels) {
-		//TODO
+
+	public boolean delete(DataModel<T>[] dataModels) throws IllegalArgumentException, IOException {
 		System.out.println("in controller - delete");
-		return false;
+		return this.cacheUnitService.delete(dataModels);
 	}
-	
-	public DataModel<T>[] get(DataModel<T>[] dataModels){
-		//TODO
+
+	public DataModel<T>[] get(DataModel<T>[] dataModels) throws IllegalArgumentException, IOException {
 		System.out.println("in controller - get");
-		return null;
+		return this.cacheUnitService.get(dataModels);
 	}
-	public boolean update(DataModel<T>[] dataModels) {
-		//TODO
+
+	public boolean update(DataModel<T>[] dataModels) throws IllegalArgumentException, IOException {
 		System.out.println("in controller - update");
-		return false;
+		return this.cacheUnitService.update(dataModels);
 	}
 }
