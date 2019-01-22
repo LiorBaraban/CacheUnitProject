@@ -1,6 +1,4 @@
-/**
- * Class 7 - Main. this is a template code given to us
- **/
+
 package com.hit.server;
 
 import com.hit.util.CLI;
@@ -8,7 +6,6 @@ import com.hit.util.CLI;
 public class CacheUnitServerDriver {
 
 	public CacheUnitServerDriver() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	@SuppressWarnings("deprecation")

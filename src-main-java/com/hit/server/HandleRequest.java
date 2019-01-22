@@ -1,12 +1,3 @@
-/**
- * Class 3
- * This class gets the socket request from Server
- * Reads the information of type Request 
- * (it's a json that comes in the socket so we need Gson)
- * it also reads the request header
- * 
- * And then it passes it to a relevant method in CacheUnitController
- **/
 
 package com.hit.server;
 
@@ -52,19 +43,9 @@ public class HandleRequest<T> implements Runnable {
 			Type ref = new TypeToken<Request<DataModel<T>[]>>() {}.getType();
 			Request<DataModel<T>[]> parsedRequest = new Gson().fromJson(requestJson, ref);
 
-			System.out.println(parsedRequest);
-
-			// parsedRequest.getBody() == datamodel[] => dm[0].getDataModelId() == 1,
-			// dm[0].getContent()= "lior";
-			// parsedRequest.getHeaders() == map => map["action"] = "UPDATE";
-
-//			System.out.println("action= " + parsedRequest.getHeaders().get("action"));
-//			System.out.println("dm content= " + parsedRequest.getBody()[0].getContent());
-			
 			String action = parsedRequest.getHeaders().get("action");
 			
 			
-			//TODO - refactor the methods below need to return a value that Writer will write back to the clients
 			switch (action) {
 			case "UPDATE":
 				boolean updateResult = this.controller.update(parsedRequest.getBody());
@@ -78,17 +59,16 @@ public class HandleRequest<T> implements Runnable {
 				DataModel<T>[] dataModelsArray = this.controller.get(parsedRequest.getBody());
 				writer.write("get result =" + dataModelsArray );
 				break;
+			case "STATISTICS":
+				String statistics = this.controller.getStatistics();
+				writer.write(statistics);
 			}
 			
 			writer.flush();
 			
-			// extract the socket input / output streams
-			// read json + header
-			// choose a relevant method to pass the info to...
 			bufReader.close();
 			writer.close();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -118,7 +98,6 @@ public class HandleRequest<T> implements Runnable {
 						// reading the last } :
 						if (jsonCurlyBraceCounter == 0) {
 							sb.append(s);
-							System.out.println(sb);
 							isFinished = true;
 						}
 						if (isFinished) {
@@ -129,12 +108,10 @@ public class HandleRequest<T> implements Runnable {
 
 				if (jsonCurlyBraceCounter > 0) {
 					sb.append(s);
-					System.out.println(sb);
 				}
 			}
 			System.out.println("finished reading json");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		return sb.toString();

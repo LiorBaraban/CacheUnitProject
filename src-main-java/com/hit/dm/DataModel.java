@@ -4,9 +4,6 @@ import java.io.Serializable;
 
 public class DataModel<T> implements Serializable{
 
-	/**
-	 * 
-	 */
 	private java.lang.Long dataModelId;
 	private T content;
 

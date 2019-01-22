@@ -1,9 +1,4 @@
-/**
- * Class 6 - will be passed from the clinet through all the server
- * components up until save/ retrieval/ deletion of data 
- * in the memory unit.
- * The data is represented by the DataModel object we created in ex 2
- **/package com.hit.server;
+package com.hit.server;
 
 import java.io.Serializable;
 import java.util.Map;

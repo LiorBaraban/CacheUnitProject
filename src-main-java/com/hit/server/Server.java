@@ -1,13 +1,4 @@
-/**
- * Class 2 
- * in the start() method we need to instantiate all server components
-	and listen to requests
-	and pass incoming requests to a new thread
-	to the classes that are responsible for them (HandleRequest) (Controller class to pass to HandleRequest)
-		
-	we need to have HandleRequest object that will get the socket
-	object and read from it the Request object
- * */
+
 package com.hit.server;
 
 import java.io.IOException;
@@ -18,6 +9,7 @@ import java.util.Observer;
 
 import com.hit.services.CacheUnitController;
 
+
 @SuppressWarnings("deprecation")
 public class Server implements Observer, Runnable {
 
@@ -25,22 +17,23 @@ public class Server implements Observer, Runnable {
 	
 	boolean isServerUp;
 	
-	Server() {
+	CacheUnitController cacheUnitController;
+	
+	Server() throws IOException {
 		this.isServerUp = false;
+		this.cacheUnitController = new CacheUnitController<String>();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		String argString = (String)arg;
 		
-		//TODO refactor the direct string
 		if (argString.equals("start")) {
 			if (this.isServerUp) {
 				System.out.println("Server is alerdy up!");
 			}
 			else {
-				// this.start();
-				// we want start() in a different thread:
+				// we want this.start() but in a different thread so:
 				new Thread(this).start();
 			}
 		} else if (argString.equals("shutdown")) {
@@ -66,10 +59,10 @@ public class Server implements Observer, Runnable {
 			
 			while (this.isServerUp) {
 				Socket socket = this.server.accept();
-				new Thread(new HandleRequest<String>(socket, new CacheUnitController<String>())).start();
+				new Thread(new HandleRequest<String>(socket, this.cacheUnitController)).start();
 			}
+			
 		
-			System.out.println("server is down");
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -80,9 +73,12 @@ public class Server implements Observer, Runnable {
 		try {
 			this.isServerUp = false;
 			this.server.close();
-			
+			System.out.println("Server is down");
+			System.out.println("Exiting Program");
+			System.exit(0);
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
 		}
 	}
 }

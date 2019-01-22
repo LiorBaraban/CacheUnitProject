@@ -1,14 +1,4 @@
-/**
- * Class 4
- * This is a separation layer between the upper networking layer
- * and the deeper CacheUnitService layer.
- * We need to implement an api here for calling the different methods
- * of CacheUnitService.
- * 
- * summary - Have CacheUnitService as a member and call it's methods
- * from different methods in here.
- * 
- * */
+
 package com.hit.services;
 
 import java.io.IOException;
@@ -20,7 +10,6 @@ public class CacheUnitController<T> {
 	private CacheUnitService<T> cacheUnitService;
 
 	public CacheUnitController() throws IOException {
-		// TODO Auto-generated constructor stub
 		this.cacheUnitService = new CacheUnitService<T>();
 	}
 
@@ -37,5 +26,10 @@ public class CacheUnitController<T> {
 	public boolean update(DataModel<T>[] dataModels) throws IllegalArgumentException, IOException {
 		System.out.println("in controller - update");
 		return this.cacheUnitService.update(dataModels);
+	}
+
+	public String getStatistics() {
+		System.out.println("in controller - getStatistics");
+		return this.cacheUnitService.getStatistics();
 	}
 }

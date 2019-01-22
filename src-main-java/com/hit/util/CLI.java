@@ -1,11 +1,3 @@
-/**
- * Class 1
- * This class is okay
- * Need to see the caller to it how it passes the parameters to ctor
- * Need to make sure that the caller puts this class in a thread...
- * After the whole implementation check which methods need to be set to private!
- * */
-
 
 package com.hit.util;
 
